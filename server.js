@@ -24,6 +24,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/fitness",
 //===================================================
 
 require("./routes/html-routes.js")(app);
+require("./routes/api-routes.js")(app);
 
 
 
