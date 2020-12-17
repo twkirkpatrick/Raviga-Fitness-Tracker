@@ -4,13 +4,14 @@ const mongoose = require("mongoose");
 module.exports = function(app){
 
     app.get("/api/workouts", (req, res) => {
-        db.Workout.find({})
-        .then(workout => {
-
-           res.json(workout);
+        db.Workout.aggregate([
+            {$addFields: {totalDuration:{$sum: '$exercises.duration'}}}
+        ])
+        .then(workouts => {
+            res.json(workouts)
         })
         .catch(err => {
-            res.json(err);
+            res.json(err)
         })
     })
 
@@ -34,6 +35,16 @@ module.exports = function(app){
             });
     })
 
+    
+    app.get("/api/workouts/range", (req, res) => {
+        db.Workout.find({})
+        .then(workout => {
+           res.json(workout);
+        })
+        .catch(err => {
+            res.json(err);
+        })
+    })
     
 
 
